@@ -36,9 +36,17 @@ def reply_to_tweets():
 
 
     for tweet in reversed(tweets):
-        print(str(tweet.id) + ' - ' + tweet.text + ' - ' + str(tweet.created_at))
+        user = tweet.user
+        name = user.screen_name
+        reply_id = tweet.id
         last_seen_id = tweet.id
         store_last_seen_id(last_seen_id, FILE_NAME)
+        api.update_status(status = "@" + name + " Under Where?", in_reply_to_status_id = reply_id)
+        time.sleep(5)
 
 
-reply_to_tweets()
+while True:
+    reply_to_tweets()
+    time.sleep(10)
+
+
